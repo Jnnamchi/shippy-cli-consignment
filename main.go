@@ -9,13 +9,13 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"google.golang.org/grpc"
 
-	gw "github.com/Jnnamchi/consignment-service/proto/consignment" // Update
+	gw "github.com/Jnnamchi/shippy-cli-consignment/protos"
 )
 
 var (
 	// command-line options:
 	// gRPC server endpoint
-	grpcServerEndpoint = flag.String("grpc-server-endpoint", "localhost:50051", "gRPC server endpoint")
+	grpcServerEndpoint = flag.String("grpc-server-endpoint", "shippy-service-consignment", "gRPC server endpoint")
 )
 
 func run() error {
@@ -27,6 +27,7 @@ func run() error {
 	// Note: Make sure the gRPC server is running properly and accessible
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
+
 	err := gw.RegisterShippingServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
 	if err != nil {
 		return err
